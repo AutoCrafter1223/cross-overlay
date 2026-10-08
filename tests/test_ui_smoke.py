@@ -45,7 +45,9 @@ class UiSmokeTests(unittest.TestCase):
 
     def test_editor_cards_align_and_motion_switch_is_per_section(self):
         with tempfile.TemporaryDirectory() as directory:
-            window=MainWindow(AppSettings(),SettingsStore(Path(directory)),DummyController())
+            settings = AppSettings()
+            settings.profiles[0].motion_assist.guides.enabled = False
+            window=MainWindow(settings,SettingsStore(Path(directory)),DummyController())
             try:
                 window.resize(1800,1000);window.show();window.load_profile();self.app.processEvents()
                 for row,stack_index in ((0,0),(1,1),(2,2)):
@@ -150,7 +152,7 @@ class UiSmokeTests(unittest.TestCase):
                 self.assertEqual(window.pointer_layer_controls["width"].value(), 80)
                 self.assertEqual(window.pointer_layer_controls["height"].value(), 40)
                 self.assertEqual(window.pointer_layer_shape.findData("arc") >= 0, True)
-                self.assertEqual(window.pointer_rate.currentData(), 0)
+                self.assertEqual(window.pointer_rate.currentData(), 120)
                 self.assertEqual(window.pointer_rate.count(), 6)
                 self.assertEqual(window.tray_korean.text(), "한국어")
                 self.assertEqual(window.tray_english.text(), "English")
@@ -203,6 +205,7 @@ class UiSmokeTests(unittest.TestCase):
     def test_general_overview_uses_target_modes_without_window_titles(self):
         with tempfile.TemporaryDirectory() as directory:
             settings = AppSettings(profiles=[Profile(name="Monitor"), Profile(name="App")])
+            settings.overlays_enabled = True
             settings.profiles[1].target.mode = "application"
             settings.profiles[1].target.executable = "Example.exe"
             settings.profiles[1].motion_assist.enabled = True

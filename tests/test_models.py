@@ -192,6 +192,38 @@ class ModelTests(unittest.TestCase):
         self.assertEqual(profile.target.executable, "notepad.exe")
         self.assertNotIn("title", profile.to_dict()["target"])
 
+    def test_packaged_defaults_match_reference_profile(self):
+        settings = AppSettings()
+        profile = settings.profiles[0]
+        crosshair = profile.crosshair
+        pointer = profile.pointer
+        motion = profile.motion_assist
+
+        self.assertFalse(settings.overlays_enabled)
+        self.assertEqual(settings.language, "ko")
+        self.assertEqual(crosshair.offset_x, -1)
+        self.assertEqual(len(crosshair.layers), 2)
+        self.assertEqual(
+            (crosshair.layers[0].x, crosshair.layers[0].width),
+            (80, 100),
+        )
+        self.assertTrue(crosshair.layers[0].circular_pattern)
+        self.assertEqual(pointer.update_rate, 120)
+        self.assertEqual(pointer.layers[0].shape, "triangle_isosceles")
+        self.assertEqual((pointer.layers[0].x, pointer.layers[0].y), (11, 15))
+        self.assertEqual(
+            (motion.guides.enabled, motion.guides.horizontal, motion.guides.vertical),
+            (True, True, True),
+        )
+        self.assertEqual(
+            (motion.guides.horizontal_length, motion.guides.vertical_length),
+            (50, 50),
+        )
+        self.assertEqual((motion.grid.enabled, motion.grid.columns, motion.grid.rows), (True, 4, 4))
+        self.assertEqual(profile.find_effect.effect, "contract")
+        self.assertEqual(profile.hotkeys.find, "Alt+Q")
+        self.assertEqual(profile.hotkeys.all_overlays, "Ctrl+Alt+R")
+
     def test_language_is_validated(self):
         self.assertEqual(AppSettings.from_dict({"language": "en"}).language, "en")
         self.assertEqual(AppSettings.from_dict({"language": "xx"}).language, "en")

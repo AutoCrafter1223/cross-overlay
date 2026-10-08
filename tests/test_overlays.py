@@ -89,6 +89,7 @@ class OverlayTests(unittest.TestCase):
         guides.horizontal = True
         guides.vertical = False
         guides.horizontal_margin = 0
+        guides.horizontal_length = 200
         guides.center_gap = 100
         guides.thickness = 17
         guides.opacity = 100

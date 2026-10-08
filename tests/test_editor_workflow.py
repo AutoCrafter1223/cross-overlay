@@ -72,7 +72,7 @@ class EditorWorkflowTests(unittest.TestCase):
         self.assertEqual((guides.horizontal_length,guides.vertical_length),(600,220))
         w._restore_edit()
         self.assertEqual(w.profile.motion_assist.guides.horizontal_length,600)
-        self.assertEqual(w.guide_vertical_length.value(),410)
+        self.assertEqual(w.guide_vertical_length.value(),50)
 
     def test_three_previews_share_zoom_and_drag_uses_real_pixels(self):
         w=self.window;w.resize(1920,1080);w.show();self.app.processEvents()

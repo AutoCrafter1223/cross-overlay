@@ -94,9 +94,26 @@ class ShapeLayer:
 
 def default_shape_layers() -> list[ShapeLayer]:
     return [
-        ShapeLayer(name="가로선", x=16, width=22, height=0, mirror_horizontal=True),
-        ShapeLayer(name="세로선", y=16, width=22, height=0, rotation=90, mirror_vertical=True),
-        ShapeLayer(name="기준점 링", shape="ring", width=7, height=7, thickness=2),
+        ShapeLayer(
+            name="가로선",
+            x=80,
+            width=100,
+            height=10,
+            thickness=5,
+            outline_thickness=3,
+            mirror_horizontal=True,
+            circular_pattern=True,
+            pattern_angle=90,
+        ),
+        ShapeLayer(
+            name="기준점 링",
+            shape="ring",
+            width=20,
+            height=20,
+            thickness=5,
+            outline_thickness=3,
+            opacity=231,
+        ),
     ]
 
 
@@ -139,7 +156,7 @@ class CrosshairSettings:
     center_size: int = 6
     center_color: str = "#ffffff"
     center_opacity: int = 230
-    offset_x: int = 0
+    offset_x: int = -1
     offset_y: int = 0
     antialiasing: bool = True
     layers: list[ShapeLayer] = field(default_factory=default_shape_layers)
@@ -190,14 +207,24 @@ class CrosshairSettings:
 class PointerSettings:
     enabled: bool = False
     active_only: bool = True
-    update_rate: int = 0
+    update_rate: int = 120
     offset_x: int = 0
     offset_y: int = 0
     antialiasing: bool = True
     layers: list[ShapeLayer] = field(default_factory=lambda: [ShapeLayer(
-        name="커서 링", shape="ring", width=34, height=34, thickness=3,
-        stroke_color="#ffff00", outline_color="#000000", outline_thickness=2,
-        fill_color="#ffff00", opacity=220,
+        name="커서 링",
+        shape="triangle_isosceles",
+        x=11,
+        y=15,
+        width=34,
+        height=34,
+        rotation=325,
+        thickness=2,
+        stroke_color="#000000",
+        outline_color="#000000",
+        outline_thickness=1,
+        fill_color="#ff0004",
+        opacity=220,
     )])
 
     @classmethod
@@ -249,10 +276,10 @@ class PointerSettings:
 class VignetteSettings:
     enabled: bool = False
     opacity: int = 145
-    center_width: int = 62
-    center_height: int = 58
-    softness: int = 30
-    shape: str = "ellipse"
+    center_width: int = 80
+    center_height: int = 80
+    softness: int = 10
+    shape: str = "rounded_rect"
     color: str = "#000000"
     offset_x: int = 0
     offset_y: int = 0
@@ -301,23 +328,23 @@ class BodyReferenceSettings:
 
 @dataclass(slots=True)
 class GuideLineSettings:
-    enabled: bool = False
+    enabled: bool = True
     horizontal: bool = True
-    vertical: bool = False
+    vertical: bool = True
     offset_x: int = 0
     offset_y: int = 0
     length_percent: int = 76
     horizontal_margin: int | None = 230
     vertical_margin: int | None = 130
-    horizontal_length: int | None = 730
-    vertical_length: int | None = 410
-    thickness: int = 2
+    horizontal_length: int | None = 50
+    vertical_length: int | None = 50
+    thickness: int = 100
     center_gap: int = 0
     horizontal_gap: int | None = None
     vertical_gap: int | None = None
-    opacity: int = 80
-    color: str = "#ffffff"
-    center_cap: str = "round"
+    opacity: int = 255
+    color: str = "#ff0101"
+    center_cap: str = "triangle"
     center_cap_angle: int = 45
     dashed: bool = False
     dash_length: int = 12
@@ -363,12 +390,12 @@ class GuideLineSettings:
 
 @dataclass(slots=True)
 class GridSettings:
-    enabled: bool = False
-    columns: int = 3
-    rows: int = 3
-    thickness: int = 1
+    enabled: bool = True
+    columns: int = 4
+    rows: int = 4
+    thickness: int = 2
     opacity: int = 45
-    color: str = "#ffffff"
+    color: str = "#000000"
     margin: int = 0
     dashed: bool = False
     dash_length: int = 10
@@ -434,12 +461,12 @@ class MotionAssistSettings:
 @dataclass(slots=True)
 class FindEffectSettings:
     enabled: bool = True
-    effect: str = "expand"
+    effect: str = "contract"
     color: str = "#00e5ff"
     opacity: int = 230
     max_size: int = 150
-    thickness: int = 4
-    duration_ms: int = 700
+    thickness: int = 5
+    duration_ms: int = 500
     repeats: int = 1
     speed: int = 100
 
@@ -455,11 +482,11 @@ class FindEffectSettings:
 
 @dataclass(slots=True)
 class HotkeySettings:
-    crosshair: str = "Ctrl+Alt+F9"
-    pointer: str = "Ctrl+Alt+F10"
+    crosshair: str = "Alt+W"
+    pointer: str = "Alt+E"
     motion_assist: str = "Ctrl+Alt+F8"
-    find: str = "Ctrl+Alt+F11"
-    all_overlays: str = "Ctrl+Alt+F12"
+    find: str = "Alt+Q"
+    all_overlays: str = "Ctrl+Alt+R"
 
 
 @dataclass(slots=True)
@@ -495,11 +522,11 @@ class Profile:
 class AppSettings:
     profiles: list[Profile] = field(default_factory=lambda: [Profile()])
     selected_profile: int = 0
-    overlays_enabled: bool = True
+    overlays_enabled: bool = False
     start_with_windows: bool = False
     minimize_to_tray: bool = True
     keep_overlay_on_top: bool = True
-    language: str = field(default_factory=default_language)
+    language: str = "ko"
     schema_version: int = 14
 
     @classmethod
