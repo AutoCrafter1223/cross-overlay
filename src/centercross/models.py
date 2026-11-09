@@ -96,11 +96,11 @@ def default_shape_layers() -> list[ShapeLayer]:
     return [
         ShapeLayer(
             name="가로선",
-            x=80,
-            width=100,
+            x=40,
+            width=20,
             height=10,
-            thickness=5,
-            outline_thickness=3,
+            thickness=2,
+            outline_thickness=2,
             mirror_horizontal=True,
             circular_pattern=True,
             pattern_angle=90,
@@ -110,8 +110,8 @@ def default_shape_layers() -> list[ShapeLayer]:
             shape="ring",
             width=20,
             height=20,
-            thickness=5,
-            outline_thickness=3,
+            thickness=1,
+            outline_thickness=2,
             opacity=231,
         ),
     ]
@@ -205,7 +205,7 @@ class CrosshairSettings:
 
 @dataclass(slots=True)
 class PointerSettings:
-    enabled: bool = False
+    enabled: bool = True
     active_only: bool = True
     update_rate: int = 120
     offset_x: int = 0
@@ -222,7 +222,7 @@ class PointerSettings:
         thickness=2,
         stroke_color="#000000",
         outline_color="#000000",
-        outline_thickness=1,
+        outline_thickness=0,
         fill_color="#ff0004",
         opacity=220,
     )])
@@ -336,9 +336,9 @@ class GuideLineSettings:
     length_percent: int = 76
     horizontal_margin: int | None = 230
     vertical_margin: int | None = 130
-    horizontal_length: int | None = 50
-    vertical_length: int | None = 50
-    thickness: int = 100
+    horizontal_length: int | None = 30
+    vertical_length: int | None = 30
+    thickness: int = 30
     center_gap: int = 0
     horizontal_gap: int | None = None
     vertical_gap: int | None = None
@@ -390,7 +390,7 @@ class GuideLineSettings:
 
 @dataclass(slots=True)
 class GridSettings:
-    enabled: bool = True
+    enabled: bool = False
     columns: int = 4
     rows: int = 4
     thickness: int = 2

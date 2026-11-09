@@ -80,13 +80,16 @@ python -m pip install -r requirements-dev.txt
 pyinstaller --clean --noconfirm CenterCross.spec
 ```
 
-결과는 `dist\CenterCross.exe`입니다. 설치 프로그램이나 드라이버는 만들지 않으며 사용자 권한으로 실행됩니다.
+결과는 `dist\CenterCross\` 폴더입니다. 폴더 안의 `CenterCross.exe`를 실행하며,
+함께 생성된 DLL과 하위 폴더를 같은 위치에 유지해야 합니다. UPX 압축을 사용하지 않고
+실행 시 임시 폴더에 압축을 푸는 과정이 없는 폴더형 배포입니다.
+설치 프로그램이나 드라이버는 만들지 않으며 사용자 권한으로 실행됩니다.
 
 ## 의존성
 
 - **PySide6**: Qt 기반 한국어 설정 화면, 투명 최상위 창, 트레이 및 저부하 타이머에 사용합니다.
 - 개발 전용 **pytest**: 선택적 테스트 실행기입니다.
-- 개발 전용 **PyInstaller**: 단일 Windows 실행 파일 패키징에 사용합니다.
+- 개발 전용 **PyInstaller**: 폴더형 Windows 실행 파일 패키징에 사용합니다.
 
 그 외 Windows 기능은 Python 표준 라이브러리 `ctypes`와 `winreg`만 사용합니다.
 

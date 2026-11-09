@@ -205,21 +205,23 @@ class ModelTests(unittest.TestCase):
         self.assertEqual(len(crosshair.layers), 2)
         self.assertEqual(
             (crosshair.layers[0].x, crosshair.layers[0].width),
-            (80, 100),
+            (40, 20),
         )
         self.assertTrue(crosshair.layers[0].circular_pattern)
         self.assertEqual(pointer.update_rate, 120)
+        self.assertTrue(pointer.enabled)
         self.assertEqual(pointer.layers[0].shape, "triangle_isosceles")
         self.assertEqual((pointer.layers[0].x, pointer.layers[0].y), (11, 15))
+        self.assertEqual(pointer.layers[0].outline_thickness, 0)
         self.assertEqual(
             (motion.guides.enabled, motion.guides.horizontal, motion.guides.vertical),
             (True, True, True),
         )
         self.assertEqual(
             (motion.guides.horizontal_length, motion.guides.vertical_length),
-            (50, 50),
+            (30, 30),
         )
-        self.assertEqual((motion.grid.enabled, motion.grid.columns, motion.grid.rows), (True, 4, 4))
+        self.assertEqual((motion.grid.enabled, motion.grid.columns, motion.grid.rows), (False, 4, 4))
         self.assertEqual(profile.find_effect.effect, "contract")
         self.assertEqual(profile.hotkeys.find, "Alt+Q")
         self.assertEqual(profile.hotkeys.all_overlays, "Ctrl+Alt+R")
